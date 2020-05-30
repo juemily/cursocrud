@@ -1,0 +1,20 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+spring:
+  datasource: 
+    password: A$th4$$N88
+    url: jdbc:mysql://localhost:3306/crud?serverTimezone=UTC
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
