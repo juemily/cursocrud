@@ -1,10 +1,13 @@
 package com.crud.curso.service.imp;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.crud.curso.entity.Course;
@@ -38,14 +41,28 @@ public class CourseServiceImp implements CourseService{
 
 	@Override
 	public Course updateCourse(Course course) {
-		// TODO Auto-generated method stub
 		return courseJpaRepository.save(course);
 	}
 
 	@Override
 	public Optional<Course> getCourseById(int id) {
-		// TODO Auto-generated method stub
 		return courseJpaRepository.findById(id);
 	}
+
+	
+
+	@Override
+	public Course findByCode(int code) {
+		return courseJpaRepository.findByCode(code);
+	}
+
+	@Override
+	public Course findByName(String name) {
+		
+		return courseJpaRepository.findByName(name);
+		}
+
+
+
 
 }

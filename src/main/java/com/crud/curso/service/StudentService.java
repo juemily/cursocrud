@@ -17,6 +17,8 @@ public interface StudentService {
 	
 	public abstract Optional<Student> getStudentById(int id);
 	
+	public abstract Student findByRut(String rut);
+	
 	
 
 }

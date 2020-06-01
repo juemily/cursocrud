@@ -48,6 +48,11 @@ public class StudentServiceImp implements StudentService{
 
 		return studentJpaRepository.findById(id);
 	}
+
+	@Override
+	public Student findByRut(String rut) {
+		return studentJpaRepository.findByRut(rut);
+	}
 	
 
 }
