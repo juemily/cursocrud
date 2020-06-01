@@ -21,9 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crud.curso.entity.Course;
 import com.crud.curso.entity.Student;
+import com.crud.curso.exception.CourseRequestException;
 import com.crud.curso.service.CourseService;
 import com.crud.curso.service.StudentService;
-import com.crud.curso.service.imp.CourseServiceImp;
+
 
 @RestController
 @RequestMapping("/student")
@@ -35,12 +36,12 @@ public class StudenController {
 	private Student validStudent = null;
 	private boolean validRut = false;
 	private List<Student> response = null;
-	private Course courseExist =null;
+	private Course courseExist = null;
 
 	@Autowired
 	@Qualifier("studentServiceImp")
 	private StudentService studentService;
-	
+
 	@Autowired
 	@Qualifier("courseServiceImp")
 	private CourseService couseService;
@@ -53,35 +54,37 @@ public class StudenController {
 	public List<Student> addStudent(@RequestBody final Student student) {
 
 		try {
-			
-			
+
 			if (!student.getRut().isEmpty()) {
 				validRut = verifyRut(student.getRut());
 
 			}
-			
+
 			if (!student.getCourse().isEmpty()) {
-				
+
 				courseExist = couseService.findByName(student.getCourse());
-				
+
 			}
 
 			validStudent = studentService.findByRut(student.getRut());
 
-			if (validStudent == null && validRut && (student.getAge() >= 18)&& courseExist != null) {
+			if (validStudent == null && validRut && (student.getAge() >= 18) && courseExist != null) {
 				studentService.addStudent(student);
 				response = studentService.getAllStudents();
+			}else {
+				throw new CourseRequestException("Error addStudent");
 			}
 
 		} catch (Exception e) {
 			LOG.error("add Student", e);
+			throw new CourseRequestException(e.getMessage());
 		}
 		return response;
 	}
 
 	/*
 	 * function to update students
-	 * */
+	 */
 	@PutMapping("/updateStudent")
 	public List<Student> updateStudent(@RequestBody final Student student) {
 
@@ -96,54 +99,56 @@ public class StudenController {
 			if (validStudent == null && validRut && (student.getAge() >= 18)) {
 				studentService.updateStudent(student);
 				response = studentService.getAllStudents();
+			}else {
+				throw new CourseRequestException("Error updateStudent");
 			}
 
 		} catch (Exception e) {
 			LOG.error("update Student", e);
+			throw new CourseRequestException(e.getMessage());
 		}
 		return response;
 	}
-	
+
 	/*
 	 * function to delete student
 	 * 
-	 * */
+	 */
 	@DeleteMapping("/deleteUser/{id}")
-	public List<Student> deleteStudentById(@PathVariable int id){
+	public List<Student> deleteStudentById(@PathVariable int id) {
 		try {
 			studentService.removeStudent(id);
-			response = studentService.getAllStudents();
+			
 		} catch (Exception e) {
 			LOG.error("delete student fail", e);
+			throw new CourseRequestException(e.getMessage());
 		}
-		
+		response = studentService.getAllStudents();
 		return response;
 	}
-	
+
 	@GetMapping("/getAllStudents")
-	public List<Student> getAllStudents(){
-	
-			response = studentService.getAllStudents();
-		
+	public List<Student> getAllStudents() {
+
+		response = studentService.getAllStudents();
+
 		return response;
 	}
-	
-	
+
 	@GetMapping("/getStudentById/{id}")
-	public Optional<Student> getStudentById(@PathVariable int id){
+	public Optional<Student> getStudentById(@PathVariable int id) {
 		Optional<Student> optional = null;
 		try {
-			
+
 			optional = studentService.getStudentById(id);
-			
+
 		} catch (Exception e) {
 			LOG.error("get student by id fail", e);
+			throw new CourseRequestException(e.getMessage());
 		}
 		return optional;
-		
+
 	}
-	
-	
 
 	/*
 	 * function to validate rut format with regex

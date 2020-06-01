@@ -3,11 +3,11 @@ package com.crud.curso.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crud.curso.entity.Course;
+import com.crud.curso.exception.CourseRequestException;
 import com.crud.curso.service.CourseService;
 
 @RestController
@@ -42,7 +43,8 @@ public class CursoController {
 
 	@PostMapping("/addCourse")
 	public List<Course> addCourse(@RequestBody final Course course) {
-
+		
+		
 		try {
 			validCode = codeCheck(course.getCode());
 			if (validCode) {
@@ -53,6 +55,8 @@ public class CursoController {
 					couseService.addCourse(course);
 
 					response = couseService.listAllCourse();
+				}else {
+					throw new CourseRequestException("The Course already Exist");
 				}
 
 			}
@@ -60,13 +64,16 @@ public class CursoController {
 		} catch (Exception e) {
 
 			LOG.error("addCourse", e);
-			throw new RuntimeException("----addCourse fail------");
+			
+			throw new CourseRequestException(e.getMessage());
+		
+			
 
 		}
 
+	
 		return response;
-	}
-
+		}
 	/*
 	 * Function to update a course
 	 */
@@ -90,6 +97,7 @@ public class CursoController {
 
 		} catch (Exception e) {
 			LOG.error("update", e);
+			throw new CourseRequestException("Error In Update");
 		}
 
 		return response;
@@ -106,6 +114,7 @@ public class CursoController {
 			couseService.removeCourse(id);
 		} catch (Exception e) {
 			LOG.error("delete course fail", e);
+			throw new CourseRequestException("Error In Delete");
 		}
 
 		return couseService.listAllCourse();
@@ -130,6 +139,7 @@ public class CursoController {
 			couseService.getCourseById(id);
 		} catch (Exception e) {
 			LOG.error("get by id", e);
+			throw new CourseRequestException("Error getCourseById");
 		}
 		
 		return response;
