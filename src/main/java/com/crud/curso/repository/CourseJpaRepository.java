@@ -15,6 +15,5 @@ public interface CourseJpaRepository extends JpaRepository<Course, Serializable>
 	
 	Course findByName(String name);
 
-
 	
 }
