@@ -10,4 +10,5 @@ import com.crud.curso.entity.Student;
 @Repository("studentJpaRepository")
 public interface StudentJpaRepository extends JpaRepository<Student, Serializable> {
 
+	Student findByRut(String rut);
 }

@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 @Entity
 @Table(name = "student")
 public class Student {
@@ -15,18 +17,23 @@ public class Student {
 	private int id;
 
 	@Column(name = "rut")
+	@NotNull
 	private String rut;
 
 	@Column(name = "name")
+	@NotNull
 	private String name;
 
 	@Column(name = "last_name")
+	@NotNull
 	private String lastName;
 
 	@Column(name = "age")
+	@NotNull
 	private int age;
 
 	@Column(name = "course")
+	@NotNull
 	private String course;
 
 	public Student() {
