@@ -163,7 +163,7 @@ public class StudenController {
 	}
 
 	/*
-	 * funtion to validate verification digit
+	 * function to validate verification digit
 	 */
 	public static String dv(String rut) {
 		Integer M = 0, S = 1, T = Integer.parseInt(rut);

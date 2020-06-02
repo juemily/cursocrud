@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +44,9 @@ public class CursoController {
 	 */
 
 	@PostMapping("/addCourse")
-	public List<Course> addCourse(@RequestBody final Course course) {
+	public ResponseEntity<Course> addCourse(@RequestBody final Course course) {
+		
+		Course returnCourse = new Course();
 		
 		
 		try {
@@ -54,7 +58,7 @@ public class CursoController {
 				if (verify == null) {
 					couseService.addCourse(course);
 
-					response = couseService.listAllCourse();
+					returnCourse = couseService.findByCode(course.getCode());
 				}else {
 					throw new CourseRequestException("The Course already Exist");
 				}
@@ -71,8 +75,8 @@ public class CursoController {
 
 		}
 
-	
-		return response;
+		
+		return new ResponseEntity<Course>(returnCourse,HttpStatus.CREATED);
 		}
 	/*
 	 * Function to update a course
@@ -140,6 +144,7 @@ public class CursoController {
 		} catch (Exception e) {
 			LOG.error("get by id", e);
 			throw new CourseRequestException("Error getCourseById");
+			
 		}
 		
 		return response;
