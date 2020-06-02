@@ -4,16 +4,24 @@ logging:
       hibernate:
         SQL: debug
 spring:
-  datasource: 
-    password: A$th4$$N88
-    url: jdbc:mysql://localhost:3306/crud?serverTimezone=UTC
-    username: root
+  cloud:
+        gcp:
+            project-id: robust-shadow-271616
+            sql:
+                database-name: crud
+                instance-connection-name: robust-shadow-271616:southamerica-east1:morrigan
+  datasource:
+        password: M0rr1g4N.
+        username: morrigan
+
+ 
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+  
   mvc:
     view:
       prefix: /WEB-INF/jsp/
