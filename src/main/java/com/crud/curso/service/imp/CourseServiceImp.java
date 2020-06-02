@@ -27,7 +27,7 @@ public class CourseServiceImp implements CourseService{
 	}
 
 	@Override
-	public Course addCourse(Course course) {
+	public Course addCourse(Course course){
 		
 		return courseJpaRepository.save(course);
 	}

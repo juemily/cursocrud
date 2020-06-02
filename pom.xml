@@ -118,6 +118,21 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+		<dependency>
+		    <groupId>com.google.api-client</groupId>
+		    <artifactId>google-api-client</artifactId>
+		    <version>1.30.9</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-maven-plugin -->
+		<dependency>
+		    <groupId>com.google.appengine</groupId>
+		    <artifactId>appengine-maven-plugin</artifactId>
+		    <version>1.9.80</version>
+		</dependency>
+		
+		
 				
 	</dependencies>
 
